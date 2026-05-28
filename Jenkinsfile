@@ -3,22 +3,22 @@ pipeline {
 
     stages {
 
+        stage('Clone') {
+            steps {
+                git 'https://github.com/YOUR_USERNAME/jenkins-demo.git'
+            }
+        }
+
         stage('Build') {
             steps {
-                echo 'Building application...'
+                sh './build.sh'
             }
         }
+    }
 
-        stage('Test') {
-            steps {
-                echo 'Testing application...'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying auto...'
-            }
+    post {
+        success {
+            archiveArtifacts artifacts: 'output/*.txt'
         }
     }
 }
